@@ -18,7 +18,7 @@ class MistralAiSensor(Entity):
 
     def __init__(self, hass: HomeAssistant, data):
         self.entity_id = generate_entity_id(
-            entity_id_format="sensor.{}", name="mistral_ai_api", hass=hass
+            entity_id_format="sensor.{}", name=DOMAIN, hass=hass
         )
 
         self.hass = hass
@@ -57,6 +57,34 @@ class MistralAiSensor(Entity):
     @property
     def extra_state_attributes(self):
         return self._attributes
+
+    @property
+    def identifier(self):
+        return self._attributes[ATTR_IDENTIFIER]
+
+    @identifier.setter
+    def identifier(self, value):
+        self._attributes[ATTR_IDENTIFIER] = value
+
+    @property
+    def last_response(self):
+        return self._attributes[ATTR_LAST_RESPONSE]
+
+    @last_response.setter
+    def last_response(self, value):
+        self._attributes[ATTR_LAST_RESPONSE] = value
+
+    @property
+    def last_prompt(self):
+        return self._attributes[ATTR_LAST_PROMPT]
+
+    @last_prompt.setter
+    def last_prompt(self, value):
+        self._attributes[ATTR_LAST_PROMPT] = value
+
+    @property
+    def timestamp(self):
+        return self._attributes[ATTR_TIMESTAMP]    
 
     def set_state(self, state: str):
         self._state = state

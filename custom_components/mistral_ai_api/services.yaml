@@ -44,3 +44,6 @@ send_prompt:
         number:
           min: 10
           max: 320
+
+# Retrieve Last Communication
+retrieve_last:

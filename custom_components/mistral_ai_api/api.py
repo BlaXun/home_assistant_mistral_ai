@@ -7,6 +7,10 @@ from .const import (
     ATTR_LAST_PROMPT,
     ATTR_LAST_RESPONSE,
     ATTR_IDENTIFIER,
+    ATTR_TIMESTAMP,
+    STATE_IDLE,
+    STATE_PROCESSING,
+    EV_PROVIDE_RESPONSE
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -23,9 +27,9 @@ async def send_prompt_command(
 ):
     sensor = hass.data[DOMAIN].get("sensor")
     if sensor:
-        sensor.set_state("processing")
-        sensor.set_attribute(ATTR_LAST_PROMPT, prompt)
-        sensor.set_attribute(ATTR_IDENTIFIER, identifier)
+        sensor.set_state(STATE_PROCESSING)
+        sensor.last_prompt = prompt
+        sensor.identifier = identifier
         sensor.refresh_timestamp()
         sensor.async_write_ha_state()
     else:
@@ -72,8 +76,8 @@ async def send_prompt_command(
             message_content = response_data["choices"][0]["message"]["content"]
 
             if sensor:
-                sensor.set_state("idle")
-                sensor.set_attribute(ATTR_LAST_RESPONSE, message_content)
+                sensor.set_state(STATE_IDLE)
+                sensor.last_response = message_content
                 sensor.refresh_timestamp()
                 sensor.async_write_ha_state()
 
@@ -82,7 +86,8 @@ async def send_prompt_command(
                 "identifier": identifier,
                 "agent_id": agent_id if agent_id else "",
             }
-            hass.bus.async_fire("mistral_ai_response", event_data)
+
+            hass.bus.async_fire(EV_PROVIDE_RESPONSE, event_data)
 
             _LOGGER.error(f"Unexpected response structure: {response_data}")
     except asyncio.TimeoutError:
@@ -91,3 +96,19 @@ async def send_prompt_command(
         _LOGGER.error(f"REST command error: {e}")
     except KeyError as e:
         _LOGGER.error(f"KeyError: {e}")
+
+async def retrieve_last_prompt(hass: HomeAssistant): 
+    sensor = hass.data[DOMAIN].get("sensor")
+    if sensor:
+
+        response = {
+            ATTR_IDENTIFIER: sensor.identifier,
+            ATTR_LAST_PROMPT: sensor.last_prompt,
+            ATTR_LAST_RESPONSE: sensor.last_response,
+            ATTR_TIMESTAMP: sensor.timestamp                        
+        }
+
+        _LOGGER.debug(f"Response {response}")
+        return response
+
+    return {}

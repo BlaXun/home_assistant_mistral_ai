@@ -4,8 +4,10 @@ import voluptuous as vol
 from homeassistant.const import CONF_API_KEY, CONF_NAME
 from homeassistant.core import HomeAssistant
 import homeassistant.helpers.config_validation as cv
+from homeassistant.util.json import JsonObjectType
+from homeassistant.core import HomeAssistant, ServiceCall, ServiceResponse, SupportsResponse
 
-from .api import send_prompt_command
+from .api import send_prompt_command, retrieve_last_prompt
 from .const import (
     ATTR_IDENTIFIER,
     ATTR_LAST_PROMPT,
@@ -57,7 +59,7 @@ async def async_setup(hass: HomeAssistant, config: dict):
 async def setup_common(hass: HomeAssistant, conf: dict) -> bool:
     api_key = conf[CONF_API_KEY]
 
-    async def send_prompt(call):
+    async def send_prompt(call: ServiceCall):
         prompt = call.data.get("prompt")
         agent_id = call.data.get("agent_id")
         identifier = call.data.get("identifier")
@@ -69,6 +71,12 @@ async def setup_common(hass: HomeAssistant, conf: dict) -> bool:
         )
 
     hass.services.async_register(DOMAIN, "send_prompt", send_prompt)
+
+    async def retrieve_last_command(call: ServiceCall) -> ServiceResponse:        
+        return await retrieve_last_prompt(hass)
+
+    hass.services.async_register(DOMAIN, "retrieve_last", retrieve_last_command, supports_response=SupportsResponse.ONLY)
+    
     return True
 
 

@@ -25,6 +25,10 @@
                     "description": "Timeout in seconds. 60 should be default."
                 }
             }
+        },
+        "retrieve_last": {
+            "name": "Retrieve last communication",
+            "description": "Retrieves the last sent prompt and response (if it exists)"
         }
     }
 }
