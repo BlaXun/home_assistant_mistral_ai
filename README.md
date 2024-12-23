@@ -138,7 +138,7 @@ As you can see the mistral_ai_api.send_prompt takes additional (optional) argume
 	<tr>
 	<tr>
 		<td><b>agent_id</b></t>
-		<td><i>optional</i>	The id of an agent you want to utilize
+		<td><i>optional</i>	The id of an agent you want to utilize</td>
 	<tr>
 	<tr>
 		<td><b>identifier</b></t>
@@ -149,6 +149,46 @@ As you can see the mistral_ai_api.send_prompt takes additional (optional) argume
 		<td><i>optional</i>	Timeout in seconds which defines how long home assistant should wait for an answer before terminating the request. Value of 60 seconds seems fine.</td>
 	<tr>
 </table>
+
+In addition to this there is another service called "mistral_ai_api.retrieve_last"
+This service will return the data for the last communication with mistral ai.
+The data consists of the following
+
+<table>
+	<tr>
+		<td><b>last_prompt</b></t>
+		<td>The prompt that was last sent</td>
+	<tr>
+	<tr>
+		<td><b>last_response</b></t>
+		<td>The last response returned by mistral</td>
+	<tr>
+	<tr>
+		<td><b>identifier</b></t>
+		<td>The last identifier assigned to the communication</td>
+	<tr>
+	<tr>
+		<td><b>timestamp</b></td>
+		<td>The last set timestamp</td>
+	<tr>
+</table>
+
+This example code shows how to use the service action in a script in home assistant
+
+```yaml
+    alias: Your script name goes here
+    sequence:
+        - action: mistral_ai_api.retrieve_last
+          metadata: {}
+          data: {}
+          response_variable: result
+        - variables:
+              identifier: "{{result.identifier}}"
+              last_prompt: "{{result.last_prompt}}"
+              last_response: "{{result.last_response}}"
+              timestamp: "{{result.timestamp}}"
+description: ""
+```
 
 ### Event
 You can react to that in an automation and do whatever you want with the result
