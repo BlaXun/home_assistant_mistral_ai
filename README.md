@@ -176,7 +176,7 @@ The data consists of the following
 This example code shows how to use the service action in a script in home assistant
 
 ```yaml
-    alias: Your script name goes here
+    alias: "[Mistral AI] Retrieve last communication"
     sequence:
         - action: mistral_ai_api.retrieve_last
           metadata: {}
@@ -187,7 +187,7 @@ This example code shows how to use the service action in a script in home assist
               last_prompt: "{{result.last_prompt}}"
               last_response: "{{result.last_response}}"
               timestamp: "{{result.timestamp}}"
-description: ""
+description: "Retrieves the last communication with mistral"
 ```
 
 ### Event
