@@ -120,6 +120,7 @@ Or like this
           prompt: Give me a jinja2 template to show some data in a nice formatted way. Make sure to only return the code as-is so I can use it directly in a markdown. Don't add any explanation, just return the code.
           model: codestral-latest
           identifier: my-question-123
+          conversation_id: my-conversation
 ```
 
 This will send the prompt to mistral ai.
@@ -131,6 +132,11 @@ As you can see the mistral_ai_api.send_prompt takes additional (optional) argume
 	<tr>
 		<td><b>prompt</b></t>
 		<td>The prompt to send to mistral</td>
+	<tr>
+	<tr>
+		<td><b>conversation_id</b></t>
+		<td><i>optional</i>	If you want to have a real conversation with the model (not just one answer to one prompt and then be done) you need to supply
+		a conversation id. This is used as a filename so, please be careful with deciding for a name.</td>
 	<tr>
 	<tr>
 		<td><b>model</b></t>
