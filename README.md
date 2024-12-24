@@ -1,4 +1,7 @@
 <a id="readme-top"></a>
+
+![alt text](https://raw.githubusercontent.com/home-assistant/brands/refs/heads/master/custom_integrations/mistral_ai_api/logo%402x.png)
+
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
