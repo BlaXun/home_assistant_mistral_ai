@@ -8,6 +8,12 @@ send_prompt:
       selector:
         text:
 
+    conversation_id:
+      required: false
+      example: "my-conversation-id"
+      selector:
+        text:
+
     model:
       required: false
       example: "mistral-large-latest"

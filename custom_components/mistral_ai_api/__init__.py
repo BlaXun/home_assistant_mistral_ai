@@ -1,5 +1,6 @@
 import logging
 import voluptuous as vol
+import os
 
 from homeassistant.const import CONF_API_KEY, CONF_NAME
 from homeassistant.core import HomeAssistant
@@ -37,6 +38,10 @@ async def async_setup(hass: HomeAssistant, config: dict):
         (ATTR_TIMESTAMP, ATTR_LAST_PROMPT, ATTR_LAST_RESPONSE, ATTR_IDENTIFIER)
     )
 
+    # Create directory for storing conversations
+    directory_path = 'custom_components/mistral_ai_api/conversations'
+    os.makedirs(directory_path,exist_ok=True)
+
     # Initialize MistralAiSensor
     sensor = MistralAiSensor(
         hass, {"state": "idle", "response": "", "prompt": "", "identifier": ""}
@@ -65,9 +70,10 @@ async def setup_common(hass: HomeAssistant, conf: dict) -> bool:
         identifier = call.data.get("identifier")
         model = call.data.get("model")
         timeout_in_seconds = call.data.get("timeout_in_seconds")
-
+        conversation_id = call.data.get("conversation_id")
+        
         await send_prompt_command(
-            hass, api_key, prompt, agent_id, identifier, model, timeout_in_seconds
+            hass, api_key, prompt, agent_id, identifier, model, timeout_in_seconds, conversation_id
         )
 
     hass.services.async_register(DOMAIN, "send_prompt", send_prompt)

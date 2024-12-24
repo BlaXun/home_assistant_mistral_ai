@@ -8,6 +8,10 @@
                     "name": "prompt",
                     "description": "The prompt to send to mistral ai"
                 },
+                "conversation_id": {
+                    "name": "conversation id",
+                    "description": "A id assigned to a long-running conversation. Use this if you want the AI to be context aware to a conversation"
+                },
                 "model": {
                     "name": "model",
                     "description": "The model to be used (Not required when using agents)"

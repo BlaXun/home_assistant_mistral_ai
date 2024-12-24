@@ -4,8 +4,8 @@
   "documentation": "https://github.com/BlaXun/home_assistant_mistral_ai",
   "dependencies": [],
   "codeowners": ["@blaxun"],
-  "version": "0.5.0",
-  "requirements": [],
+  "version": "0.6.0",
+  "requirements": ["aiofiles"],
   "config_flow": false,
   "single_config_entry": true,
   "issue_tracker": "https://github.com/BlaXun/home_assistant_mistral_ai/issues"
