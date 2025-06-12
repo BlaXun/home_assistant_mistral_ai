@@ -49,7 +49,7 @@ async def async_setup(hass: HomeAssistant, config: dict):
     sensor.async_write_ha_state()
 
     hass.async_create_task(
-        hass.config_entries.async_forward_entry_setup(config, "sensor")
+        hass.config_entries.async_forward_entry_setups(config, "sensor")
     )
 
     hass.data[DOMAIN]["sensor"] = sensor
