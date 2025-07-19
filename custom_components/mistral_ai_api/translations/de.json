@@ -1,0 +1,38 @@
+{
+    "services": {
+        "send_prompt": {
+            "name": "Sende den Prompt an Mistral AI",
+            "description": "Sendet die Anweisung an Mistral AI",
+            "fields": {
+                "prompt": {
+                    "name": "Prompt",
+                    "description": "Prompt/Anweisung, welche(r) an Mistral AI gesendet wird"
+                },
+                "conversation_id": {
+                    "name": "Conversation ID",
+                    "description": "Konversation ID für längere Unterhaltungen - nutze sie wenn das hinterliegende Model den Kontext der Unterhaltung bewahren soll."
+                },
+                "model": {
+                    "name": "Model",
+                    "description": "Auswahl des Models (nicht notwendig wenn Agents verwendet werden)"
+                },
+                "agent_id": {
+                    "name": "Agent ID",
+                    "description": "Agent ID zur Zuweisung eines ausgehenden Promptes"
+                },
+                "identifier": {
+                    "name": "Antwort ID",
+                    "description": "ID zu Zuweisung einer eingehenden Antwort"
+                },
+                "timeout_in_seconds": {
+                    "name": "Timeout in Sekunden",
+                    "description": "Timeout in Sekunden (default = '60')"
+                }
+            }
+        },
+        "retrieve_last": {
+            "name": "Wiederherstellen der letzten Kommunikation",
+            "description": "Wiederherstellung der letzte gesendeten Prompts und Antworten (wenn vorhanden)"
+        }
+    }
+}
